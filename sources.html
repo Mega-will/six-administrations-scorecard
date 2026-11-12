@@ -55,10 +55,24 @@ nav.site a,nav.site .cur{display:inline-flex;align-items:center;min-height:40px;
 nav.site a:hover{background:var(--surface);color:var(--ink)}
 nav.site .cur{color:var(--ink);font-weight:600}
 nav.site .sep{color:var(--muted)}
-nav.site .buckets{display:flex;flex-wrap:wrap;gap:4px;margin-left:auto}
+nav.site .buckets{display:flex;flex-wrap:wrap;gap:4px}
 nav.site .buckets a{min-width:40px;justify-content:center;font-family:var(--font-mono);font-size:13px;border:1px solid var(--rule);background:var(--surface)}
 nav.site .buckets a[aria-current]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
-@media (max-width:560px){nav.site .buckets{margin-left:0;width:100%} nav.site .sep{display:none} nav.site{gap:4px 6px}}
+nav.site .find{position:relative;flex:1 1 200px;max-width:320px;margin-left:auto}
+nav.site .find .box{position:relative}
+nav.site .find .box svg{position:absolute;left:10px;top:50%;width:16px;height:16px;transform:translateY(-50%);pointer-events:none;color:var(--muted)}
+nav.site .find input{font:inherit;font-size:16px;width:100%;min-height:40px;padding:6px 10px 6px 32px;background:var(--surface);color:var(--ink);border:1px solid var(--axis);border-radius:4px;appearance:none;-webkit-appearance:none}
+nav.site .find input::placeholder{color:var(--muted)}
+nav.site .find input:focus-visible{outline:2px solid var(--dem);outline-offset:2px}
+nav.site .hits{position:absolute;z-index:50;left:0;right:0;top:calc(100% + 4px);margin:0;padding:4px;list-style:none;background:var(--surface);border:1px solid var(--axis);border-radius:6px;box-shadow:0 8px 24px var(--ring);max-height:min(60vh,440px);overflow:auto}
+nav.site .hits li{margin:0}
+nav.site .hits a{display:block;padding:8px 10px;border-radius:4px;min-height:40px;color:var(--ink);text-decoration:none;line-height:1.3}
+nav.site .hits a .s{display:block;color:var(--ink-2);font-size:13px;margin-top:2px}
+nav.site .hits a .g{font-family:var(--font-mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-left:8px;white-space:nowrap}
+nav.site .hits li[aria-selected="true"] a,nav.site .hits a:hover{background:var(--bg)}
+nav.site .hits .none{padding:10px;color:var(--ink-2);font-size:14px}
+nav.site .buckets{margin-left:10px}
+@media (max-width:560px){nav.site .buckets{margin-left:0;width:100%} nav.site .find{flex-basis:100%;max-width:none;margin-left:0} nav.site .sep{display:none} nav.site{gap:6px 6px}}
 
 /* header */
 header{padding-block:28px 20px;border-bottom:1px solid var(--rule)}
@@ -186,8 +200,48 @@ footer .fine{margin-top:18px;max-width:var(--measure)}
 
 <nav class="site" aria-label="Site">
   <a href="index.html">Charts</a><span class="sep">·</span><a href="scorecard/index.html">Scorecard</a><span class="sep">·</span><a href="about.html">How to read this</a><span class="sep">·</span><span class="cur">Sources</span>
+  <form class="find" role="search" autocomplete="off" data-prefix="" data-page="sources.html" onsubmit="return false">
+    <div class="box"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="6.5" cy="6.5" r="4.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M10 10l4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><input type="search" name="q" placeholder="Find a measure or domain" aria-label="Find a measure, topic or domain" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="find-hits" spellcheck="false"></div>
+    <ul class="hits" id="find-hits" role="listbox" aria-label="Matches" hidden></ul>
+  </form>
   <div class="buckets" aria-label="Buckets"><a href="scorecard/1.html" title="Fiscal &amp; Budget">1</a><a href="scorecard/2.html" title="Economy, Jobs &amp; Monetary">2</a><a href="scorecard/3.html" title="National Security &amp; Defense">3</a><a href="scorecard/4.html" title="Foreign Policy &amp; Alliances">4</a><a href="scorecard/5.html" title="Borders, Immigration &amp; Citizenship">5</a><a href="scorecard/6.html" title="Trade, Industry &amp; Technology">6</a><a href="scorecard/7.html" title="Energy, Infrastructure &amp; Environment">7</a><a href="scorecard/8.html" title="Rule of Law, Institutions &amp; Civil Liberties">8</a><a href="scorecard/9.html" title="Public Health, Safety &amp; Social Insurance">9</a><a href="scorecard/10.html" title="Elections, Civic Trust &amp; Federalism">10</a></div>
 </nav>
+<script type="application/json" id="find-data">1260</script>
+<script>(function(){
+  var form=document.querySelector('nav.site form.find');if(!form)return;
+  var data=JSON.parse(document.getElementById('find-data').textContent);
+  var prefix=form.getAttribute('data-prefix')||'',page=form.getAttribute('data-page')||'';
+  var input=form.querySelector('input'),list=form.querySelector('ul.hits'),hits=[],sel=-1;
+  for(var i=0;i<data.length;i++)data[i].x=(data[i].t+' '+(data[i].s||'')+' '+(data[i].k||'')).toLowerCase();
+  function esc(v){return String(v).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+  function href(u){var i=u.indexOf('#');var path=i<0?u:u.slice(0,i);return path===page&&i>=0?u.slice(i):prefix+u;}
+  function close(){list.hidden=true;list.innerHTML='';hits=[];sel=-1;input.setAttribute('aria-expanded','false');input.removeAttribute('aria-activedescendant');}
+  function render(q){
+    var term=q.toLowerCase().replace(/\s+/g,' ').trim();if(term.length<2){close();return;}
+    var words=term.split(' '),scored=[];
+    for(var i=0;i<data.length;i++){var d=data[i],ok=true;for(var w=0;w<words.length;w++)if(d.x.indexOf(words[w])<0){ok=false;break;}
+      if(!ok)continue;var tl=d.t.toLowerCase();scored.push([tl===term?0:tl.indexOf(term)===0?1:tl.indexOf(term)>-1?2:3,i]);}
+    scored.sort(function(a,b){return a[0]-b[0]||a[1]-b[1];});
+    hits=scored.slice(0,8).map(function(x){return data[x[1]];});
+    var h='';
+    if(!hits.length)h='<li class="none">Nothing matches “'+esc(q.trim())+'”. Try another word, or the full-text search on a bucket page.</li>';
+    for(var j=0;j<hits.length;j++){var d=hits[j];h+='<li role="option" id="find-opt-'+j+'" aria-selected="false"><a href="'+esc(href(d.u))+'">'+esc(d.t)+'<span class="g">'+esc(d.g)+'</span>'+(d.s?'<span class="s">'+esc(d.s)+'</span>':'')+'</a></li>';}
+    list.innerHTML=h;list.hidden=false;sel=-1;input.setAttribute('aria-expanded','true');
+  }
+  function select(n){var items=list.querySelectorAll('li[id]');for(var i=0;i<items.length;i++)items[i].setAttribute('aria-selected',String(i===n));sel=n;
+    if(n>=0){input.setAttribute('aria-activedescendant','find-opt-'+n);items[n].scrollIntoView({block:'nearest'});}else input.removeAttribute('aria-activedescendant');}
+  input.addEventListener('input',function(){render(input.value);});
+  input.addEventListener('focus',function(){if(input.value)render(input.value);});
+  input.addEventListener('keydown',function(e){
+    if(e.key==='Escape'){close();return;}
+    if(list.hidden)return;
+    if(e.key==='ArrowDown'){e.preventDefault();select(Math.min(sel+1,hits.length-1));}
+    else if(e.key==='ArrowUp'){e.preventDefault();select(Math.max(sel-1,-1));}
+    else if(e.key==='Enter'){var as=list.querySelectorAll('li[id] a'),a=as[sel>=0?sel:0];if(a){e.preventDefault();a.click();}}
+  });
+  list.addEventListener('click',function(e){if(e.target.closest('a')){close();input.blur();}});
+  document.addEventListener('click',function(e){if(!form.contains(e.target))close();});
+})();</script>
 <header>
   <div class="eyebrow">Six Administrations Scorecard · Sources</div>
   <h1>Every page cited</h1>
