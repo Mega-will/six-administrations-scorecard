@@ -394,15 +394,20 @@ for(const [gname,keys] of GROUPS)for(const k of keys){const s=SERIES[k];const c=
 function niceTicks(lo,hi,n){const span=hi-lo;const raw=span/n;const p=Math.pow(10,Math.floor(Math.log10(raw)));const f=raw/p;const step=(f<1.5?1:f<3?2:f<7?5:10)*p;const a=Math.floor(lo/step)*step,b=Math.ceil(hi/step)*step;const t=[];for(let v=a;v<=b+1e-9;v+=step)t.push(+v.toFixed(6));return{t,a,b};}
 const yLab=(k,v)=>{if(k==="medinc"||k==="rdpi")return "$"+(v/1000).toFixed(0)+"k";if(k==="od")return (v/1000).toFixed(0)+"k";if(k==="crime")return v.toFixed(0);if(k==="earn")return "$"+v.toFixed(0);return v.toFixed(v%1?1:0)+(unitSuffix(k)==="%"?"%":"");};
 function drawChart(k){
-  const s=SERIES[k],card=cards[k],host=card.querySelector(".plot");const W=Math.max(300,host.clientWidth||480),H=250;
-  const m={l:46,r:48,t:22,b:50};const pw=W-m.l-m.r,ph=H-m.t-m.b;
+  const s=SERIES[k],card=cards[k],host=card.querySelector(".plot");const W=Math.max(300,host.clientWidth||480);
+  const m={l:46,r:48,t:22,b:50};const pw=W-m.l-m.r;
+  const x=yr=>m.l+(yr-X0)/(X1-X0)*pw;
+  // term labels: centred on the band, kept inside the chart, and dropped to the next row up when they would touch a neighbour (narrow screens)
+  const LF=10,lab=[],rowEnd=[];
+  for(const a of ADMINS){const xa=x(a.start-0.5),xb=x((a.bandEnd||a.end+0.5));const w=a.name.length*LF*0.58;const cx=Math.min(Math.max((xa+xb)/2,m.l+w/2),W-w/2);let r=0;while(rowEnd[r]!=null&&rowEnd[r]+4>cx-w/2)r++;rowEnd[r]=cx+w/2;lab.push({a,xa,xb,cx,r});}
+  const rows=rowEnd.length;m.t+=(rows-1)*11;const H=250+(rows-1)*11;const ph=H-m.t-m.b;
   const years=Object.keys(s.data).map(Number).sort((a,b)=>a-b);const vals=years.map(y=>s.data[y]);
   const lo=Math.min(...vals),hi=Math.max(...vals);const pad=(hi-lo)*0.12||1;const tk=niceTicks(lo-pad,hi+pad,4);
-  const x=yr=>m.l+(yr-X0)/(X1-X0)*pw;const y=v=>m.t+ph-(v-tk.a)/(tk.b-tk.a)*ph;
+  const y=v=>m.t+ph-(v-tk.a)/(tk.b-tk.a)*ph;
   let g=`<svg viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" role="img" aria-label="${s.name}, ${years[0]} to ${years[years.length-1]}">`;
   // term bands + labels
-  for(const a of ADMINS){const xa=x(a.start-0.5),xb=x((a.bandEnd||a.end+0.5));g+=`<rect x="${xa}" y="${m.t}" width="${xb-xa}" height="${ph}" fill="var(--${a.party==='D'?'dem':'rep'}-band)"/>`;
-    g+=`<text x="${(xa+xb)/2}" y="${m.t-8}" font-size="10" text-anchor="middle" fill="var(--ink-2)">${a.name}</text>`;}
+  for(const {a,xa,xb,cx,r} of lab){g+=`<rect x="${xa}" y="${m.t}" width="${xb-xa}" height="${ph}" fill="var(--${a.party==='D'?'dem':'rep'}-band)"/>`;
+    g+=`<text x="${cx}" y="${m.t-8-r*11}" font-size="${LF}" text-anchor="middle" fill="var(--ink-2)">${a.name}</text>`;}
   // shock columns
   for(const yr in SHOCKS){g+=`<rect x="${x(+yr-0.5)}" y="${m.t}" width="${x(+yr+0.5)-x(+yr-0.5)}" height="${ph}" fill="var(--shock)"/>`;}
   // grid + y labels
@@ -435,10 +440,10 @@ function drawChart(k){
   const show=ev=>{const r=svg.getBoundingClientRect();const px=(ev.clientX-r.left)*(W/r.width);const yrF=X0+(px-m.l)/pw*(X1-X0);
     let best=null,bd=1e9;for(const yr of years){const d=Math.abs(yr-yrF);if(d<bd){bd=d;best=yr;}}if(best==null)return;
     const v=s.data[best];xh.setAttribute("x1",x(best));xh.setAttribute("x2",x(best));xh.setAttribute("opacity",".5");hd.setAttribute("cx",x(best));hd.setAttribute("cy",y(v));hd.setAttribute("opacity","1");
-    const p=presOf(best);const [hc,sc]=CONGRESS[best];const cl=c=>c==="D"?"Dem":c==="R"?"Rep":"split";
+    const p=presOf(best);const cg=CONGRESS[best];const cl=c=>c==="D"?"Dem":c==="R"?"Rep":"split";
     const notes=[];if(s.partial&&s.partial[best])notes.push(s.partial[best]);if(s.breaks&&s.breaks[best])notes.push("series break: "+s.breaks[best]);if(s.approx&&s.approx[best])notes.push("approx.: "+s.approx[best]);if(SHOCKS[best])notes.push(SHOCKS[best]);
     const prev=s.data[best-1];const d=prev==null?"":` <span class="k">(${fmtChg(k,s.fmt==="pct"?(v/prev-1)*100:v-prev)} vs ${best-1})</span>`;
-    tip.innerHTML=`<div><b class="num">${best}</b> · <span class="num">${valLabel(k,v)}</span>${d}</div><div class="k">${p?p.name+" ("+p.party+")":""} · House ${cl(hc)}, Senate ${cl(sc)}</div>${notes.length?`<div class="k">${notes.join(" · ")}</div>`:""}`;
+    tip.innerHTML=`<div><b class="num">${best}</b> · <span class="num">${valLabel(k,v)}</span>${d}</div><div class="k">${p?p.name+" ("+p.party+")":""}${cg?" · House "+cl(cg[0])+", Senate "+cl(cg[1]):""}</div>${notes.length?`<div class="k">${notes.join(" · ")}</div>`:""}`;
     tip.style.display="block";const cr=card.getBoundingClientRect();let left=ev.clientX-cr.left+12,top=ev.clientY-cr.top-10;if(left+250>cr.width)left=ev.clientX-cr.left-250;tip.style.left=left+"px";tip.style.top=top+"px";};
   const hide=()=>{tip.style.display="none";xh.setAttribute("opacity","0");hd.setAttribute("opacity","0");};
   hit.addEventListener("mousemove",show);hit.addEventListener("mouseleave",hide);hit.addEventListener("touchstart",e=>{show(e.touches[0]);},{passive:true});
