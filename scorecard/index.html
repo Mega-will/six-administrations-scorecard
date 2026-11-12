@@ -1,0 +1,267 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>All 100 domains · Six Administrations Scorecard</title>
+<meta name="description" content="Index of the Six Administrations Scorecard: ten buckets, 100 policy domains, one table per domain with a row for each administration from Clinton to Trump's second term.">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+
+:root{
+  --bg:#faf9f6; --surface:#ffffff; --ink:#15140f; --ink-2:#52504a; --muted:#8a877f;
+  --rule:#e4e1d8; --grid:#ebe8e0; --axis:#c9c5ba; --ring:rgba(21,20,15,.10);
+  --dem:#2a78d6; --rep:#e34948; --split:#9a978f;
+  --font-sans:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --font-mono:"IBM Plex Mono",ui-monospace,"SFMono-Regular",Menlo,monospace;
+  --measure:68ch;
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#141413; --surface:#1c1c1a; --ink:#f1efe8; --ink-2:#c6c3b8; --muted:#8f8c84;
+    --rule:#2b2b28; --grid:#262623; --axis:#3d3c38; --ring:rgba(255,255,255,.10);
+    --dem:#3987e5; --rep:#e66767; --split:#7d7a72;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#141413; --surface:#1c1c1a; --ink:#f1efe8; --ink-2:#c6c3b8; --muted:#8f8c84;
+  --rule:#2b2b28; --grid:#262623; --axis:#3d3c38; --ring:rgba(255,255,255,.10);
+  --dem:#3987e5; --rep:#e66767; --split:#7d7a72;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{background:var(--bg);color:var(--ink);font-family:var(--font-sans);font-size:15px;line-height:1.55;margin:0;
+  padding-block:0 48px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));
+  overflow-wrap:break-word}
+.wrap{max-width:1280px;margin:0 auto}
+h1,h2,h3{text-wrap:balance;margin:0;font-weight:600;letter-spacing:-.01em}
+h1{font-size:clamp(28px,4vw,40px);line-height:1.1}
+h2{font-size:20px;line-height:1.25}
+p{margin:0}
+a{color:inherit;text-decoration-color:var(--axis);text-underline-offset:2px;overflow-wrap:anywhere}
+a:hover{text-decoration-color:var(--ink)}
+a:focus-visible{outline:2px solid var(--dem);outline-offset:2px}
+.eyebrow{font-family:var(--font-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.num{font-family:var(--font-mono);font-variant-numeric:tabular-nums}
+.sec-head{display:flex;flex-direction:column;gap:4px}
+
+/* site nav */
+nav.site{display:flex;flex-wrap:wrap;gap:4px 2px;align-items:center;padding-block:10px;border-bottom:1px solid var(--rule);font-size:15px}
+nav.site a,nav.site .cur{display:inline-flex;align-items:center;min-height:40px;padding:0 10px;text-decoration:none;color:var(--ink-2);border-radius:4px}
+nav.site a:hover{background:var(--surface);color:var(--ink)}
+nav.site .cur{color:var(--ink);font-weight:600}
+nav.site .sep{color:var(--muted)}
+nav.site .buckets{display:flex;flex-wrap:wrap;gap:4px;margin-left:auto}
+nav.site .buckets a{min-width:40px;justify-content:center;font-family:var(--font-mono);font-size:13px;border:1px solid var(--rule);background:var(--surface)}
+nav.site .buckets a[aria-current]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+@media (max-width:560px){nav.site .buckets{margin-left:0;width:100%} nav.site .sep{display:none} nav.site{gap:4px 6px}}
+
+/* header */
+header{padding-block:28px 20px;border-bottom:1px solid var(--rule)}
+header .dek{max-width:var(--measure);color:var(--ink-2);margin-top:14px;font-size:16px}
+header .meta{margin-top:14px;display:flex;flex-wrap:wrap;gap:8px 18px;color:var(--muted);font-size:13px}
+/* domain index */
+nav.toc{padding-block:22px 6px}
+nav.toc ol{list-style:none;margin:10px 0 0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr));gap:6px}
+nav.toc a{display:flex;gap:10px;align-items:baseline;min-height:44px;padding:10px 12px;background:var(--surface);border:1px solid var(--rule);text-decoration:none;color:var(--ink);border-radius:3px}
+nav.toc a .n{font-size:12px;color:var(--muted);min-width:4.2ch}
+nav.toc a:hover{border-color:var(--axis)}
+nav.toc .how{max-width:var(--measure);color:var(--ink-2);margin-top:14px;font-size:15px}
+/* filters (bucket pages and the domain index) */
+[hidden]{display:none !important}
+.vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+form.filter{margin-top:16px;display:flex;flex-direction:column;gap:10px;max-width:var(--measure)}
+form.filter .filters,form.filter .showing{margin-top:0}
+.search{display:block}
+.search input{font:inherit;font-size:16px;width:100%;min-height:44px;padding:8px 12px;background:var(--surface);color:var(--ink);border:1px solid var(--axis);border-radius:4px;appearance:none;-webkit-appearance:none}
+.search input::placeholder{color:var(--muted)}
+.search input:focus-visible{outline:2px solid var(--dem);outline-offset:2px}
+.filters button .party{margin-right:6px}
+section.bkt{padding-block:28px 6px;border-top:1px solid var(--rule);scroll-margin-top:12px}
+section.bkt h2 a{text-decoration:none}
+section.bkt h2 a:hover{text-decoration:underline}
+ol.idx{list-style:none;margin:14px 0 0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr));gap:6px}
+ol.idx a{display:flex;gap:10px;align-items:baseline;min-height:44px;padding:10px 12px;background:var(--surface);border:1px solid var(--rule);text-decoration:none;color:var(--ink);border-radius:3px}
+ol.idx a:hover{border-color:var(--axis)}
+ol.idx a .n{font-size:12px;color:var(--muted);min-width:4.2ch}
+ol.idx .dn{display:block;font-weight:500}
+ol.idx .dd{display:block;color:var(--ink-2);font-size:15px;margin-top:3px}
+/* domains */
+section.domain{padding-block:28px 6px;scroll-margin-top:12px}
+section.domain > .lead,section.sources > .lead{max-width:var(--measure);color:var(--ink-2);margin-top:6px}
+.up{margin-top:10px;font-size:14px}
+.up a{display:inline-flex;align-items:center;min-height:40px;color:var(--muted);text-decoration:none}
+.up a:hover{color:var(--ink)}
+/* one table, two layouts: cards below 900px, table at 900px and wider */
+table.sc{width:100%;border-collapse:collapse;margin-top:14px}
+table.sc,table.sc thead,table.sc tbody,table.sc tr,table.sc th,table.sc td{display:block}
+table.sc thead{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap}
+table.sc tr{background:var(--surface);border:1px solid var(--rule);border-left-width:3px;padding:12px 14px 14px;margin-top:10px}
+table.sc tr.D{border-left-color:var(--dem)} table.sc tr.R{border-left-color:var(--rep)}
+table.sc th[scope=row]{text-align:left;font-weight:600;font-size:16px;line-height:1.3;padding:0 0 2px;display:flex;flex-wrap:wrap;gap:4px 8px;align-items:center}
+table.sc .who{display:inline-flex;gap:7px;align-items:center}
+table.sc td{padding:12px 0 0;font-size:15px;line-height:1.55}
+table.sc td::before{content:attr(data-f);display:block;font-family:var(--font-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:3px}
+.party{display:inline-block;font-family:var(--font-mono);font-size:10px;font-weight:600;padding:1px 5px;border-radius:2px;color:#fff;letter-spacing:.04em;line-height:1.5}
+.party.D{background:var(--dem)} .party.R{background:var(--rep)}
+.yrs{font-family:var(--font-mono);font-size:13px;color:var(--muted);font-weight:400}
+.badge{display:inline-block;font-family:var(--font-mono);font-size:10px;color:var(--ink-2);border:1px solid var(--axis);padding:0 5px;border-radius:2px;vertical-align:middle;letter-spacing:.04em}
+.approx{font-family:var(--font-mono);font-size:.92em;color:var(--ink-2);border-bottom:1px dotted var(--axis)}
+@media (min-width:900px){
+  table.sc{display:table;table-layout:fixed;border:1px solid var(--rule);background:var(--surface);font-size:14px;line-height:1.5}
+  table.sc thead{display:table-header-group;position:static;width:auto;height:auto;overflow:visible;clip:auto;clip-path:none;white-space:normal}
+  table.sc tbody{display:table-row-group}
+  table.sc tr{display:table-row;border:0;padding:0;margin:0;background:none}
+  table.sc th,table.sc td{display:table-cell;vertical-align:top;padding:10px 12px;border-bottom:1px solid var(--rule);border-left:1px solid var(--grid)}
+  table.sc th:first-child,table.sc td:first-child{border-left:0}
+  table.sc thead th{text-align:left;font-weight:500;color:var(--ink-2);border-bottom:1px solid var(--axis);background:var(--surface);position:sticky;top:0;z-index:1;font-size:13px}
+  table.sc thead th:first-child{width:150px}
+  table.sc th[scope=row]{display:table-cell;font-size:14px;line-height:1.35;padding:10px 12px}
+  table.sc tr.D th{box-shadow:inset 3px 0 0 var(--dem)} table.sc tr.R th{box-shadow:inset 3px 0 0 var(--rep)}
+  table.sc th[scope=row] .who{display:flex}
+  table.sc th[scope=row] .yrs{display:block;margin-top:3px;font-size:12px}
+  table.sc th[scope=row] .badge{margin-top:6px}
+  table.sc td{font-size:14px;line-height:1.5;padding:10px 12px}
+  table.sc td::before{display:none}
+}
+/* sources */
+section.sources{padding-block:32px 8px;margin-top:16px;border-top:1px solid var(--rule)}
+ol.src{margin:14px 0 0;padding-left:0;list-style:none;counter-reset:src}
+ol.src li{position:relative;padding:8px 0 8px 3.4em;border-bottom:1px solid var(--grid);color:var(--ink-2);line-height:1.5}
+ol.src li::before{counter-increment:src;content:counter(src);position:absolute;left:0;top:9px;font-family:var(--font-mono);font-size:12px;color:var(--muted)}
+ol.src li a{color:var(--ink)}
+.note{margin-top:14px;max-width:var(--measure);color:var(--ink-2);font-size:15px}
+/* overview page */
+.prose{max-width:var(--measure);margin-top:10px;color:var(--ink)}
+.prose p{margin-top:10px}
+.prose ul,.prose ol{margin:10px 0 0;padding-left:22px}
+.prose li{margin:6px 0}
+.prose li li{margin:3px 0}
+.prose h3{font-size:16px;margin-top:22px}
+.prose .term{font-weight:600}
+.prose .lab{font-family:var(--font-mono);font-size:.92em;color:var(--ink-2);border:1px solid var(--axis);padding:0 5px;border-radius:2px;white-space:nowrap}
+section.block{padding-block:28px 6px;border-top:1px solid var(--rule);scroll-margin-top:12px}
+section.block:first-of-type{border-top:0}
+table.plain{width:100%;border-collapse:collapse;margin-top:14px;background:var(--surface);border:1px solid var(--rule);font-size:14px;line-height:1.4}
+table.plain th,table.plain td{padding:8px 10px;border-bottom:1px solid var(--grid);text-align:left;vertical-align:top}
+table.plain th{font-weight:500;color:var(--ink-2);font-size:13px;border-bottom:1px solid var(--axis)}
+table.plain td.n{text-align:right;font-family:var(--font-mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+table.plain th.n{text-align:right}
+table.plain tr.total td{font-weight:600;border-top:1px solid var(--axis)}
+table.plain td .party{margin-right:4px}
+table.plain td:first-child{min-width:8em}
+table.plain a{overflow-wrap:normal}
+table.plain tr.D td:first-child{box-shadow:inset 3px 0 0 var(--dem)} table.plain tr.R td:first-child{box-shadow:inset 3px 0 0 var(--rep)}
+@media (max-width:560px){table.plain{font-size:13.5px} table.plain th,table.plain td{padding:7px 6px}}
+nav.toc ol.wide{grid-template-columns:repeat(auto-fill,minmax(min(100%,220px),1fr))}
+/* sources page */
+.tag{display:inline-block;font-family:var(--font-mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2);border:1px solid var(--axis);padding:1px 5px;border-radius:2px;vertical-align:middle;white-space:nowrap;margin-right:6px;line-height:1.5}
+ol.src li .tag{margin-right:8px}
+.filters{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}
+.filters button{font:inherit;font-size:14px;min-height:40px;padding:0 12px;background:var(--surface);color:var(--ink-2);border:1px solid var(--axis);border-radius:4px;cursor:pointer}
+.filters button[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.filters button:focus-visible{outline:2px solid var(--dem);outline-offset:2px}
+.showing{margin-top:10px;color:var(--muted);font-size:14px}
+.bytag{display:flex;flex-wrap:wrap;gap:4px 12px;margin-top:8px;color:var(--ink-2);font-size:13px}
+.bytag span{white-space:nowrap}
+section.srcb{padding-block:28px 6px;border-top:1px solid var(--rule);scroll-margin-top:12px}
+section.srcb h2 a{text-decoration:none}
+section.srcb h2 a:hover{text-decoration:underline}
+/* footer */
+footer{padding-block:24px 0;border-top:1px solid var(--rule);margin-top:28px;color:var(--ink-2);font-size:14px}
+footer .steps{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+footer .step{display:flex;flex-direction:column;gap:3px;min-height:44px;padding:10px 12px;background:var(--surface);border:1px solid var(--rule);text-decoration:none;color:var(--ink);border-radius:3px}
+footer .step:last-child{text-align:right}
+footer .step:hover{border-color:var(--axis)}
+footer .fine{margin-top:18px;max-width:var(--measure)}
+
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<nav class="site" aria-label="Site">
+  <a href="../index.html">Charts</a><span class="sep">·</span><span class="cur">Scorecard</span><span class="sep">·</span><a href="../about.html">How to read this</a><span class="sep">·</span><a href="../sources.html">Sources</a>
+  <div class="buckets" aria-label="Buckets"><a href="../scorecard/1.html" title="Fiscal &amp; Budget">1</a><a href="../scorecard/2.html" title="Economy, Jobs &amp; Monetary">2</a><a href="../scorecard/3.html" title="National Security &amp; Defense">3</a><a href="../scorecard/4.html" title="Foreign Policy &amp; Alliances">4</a><a href="../scorecard/5.html" title="Borders, Immigration &amp; Citizenship">5</a><a href="../scorecard/6.html" title="Trade, Industry &amp; Technology">6</a><a href="../scorecard/7.html" title="Energy, Infrastructure &amp; Environment">7</a><a href="../scorecard/8.html" title="Rule of Law, Institutions &amp; Civil Liberties">8</a><a href="../scorecard/9.html" title="Public Health, Safety &amp; Social Insurance">9</a><a href="../scorecard/10.html" title="Elections, Civic Trust &amp; Federalism">10</a></div>
+</nav>
+<header>
+  <div class="eyebrow">Six Administrations Scorecard · Index</div>
+  <h1>All 100 domains</h1>
+  <p class="dek">Ten buckets, each with ten domains. Every domain is one table with a row for each administration from Clinton to Trump's second term: what happened, what its defenders say, what its critics say, and who else holds credit or blame. Pick a domain below, or search the names and descriptions.</p>
+  <div class="meta"><span><span class="num">10</span> buckets</span><span><span class="num">100</span> domains</span><span><span class="num">3,000</span> cells</span><span><span class="num">1,260</span> sources listed</span><span>As of <span class="num">Nov 11, 2026</span></span></div>
+  <form class="filter" role="search" onsubmit="return false" hidden>
+    <label class="search"><span class="vh">Search domain names and descriptions</span><input type="search" name="q" placeholder="Search domains, e.g. housing" autocomplete="off" spellcheck="false"></label>
+    <p class="showing" id="showing" aria-live="polite"></p>
+  </form>
+</header>
+
+<section class="bkt" id="b1">
+  <div class="sec-head"><div class="eyebrow">Bucket 1 of 10</div><h2><a href="1.html">Fiscal &amp; Budget</a></h2></div>
+  <ol class="idx"><li><a href="1.html#s1-1"><span class="n num">1.1</span><span><span class="dn">Annual deficits and surpluses</span><span class="dd">Unified budget balance as a share of GDP — whether the state pays for what it spends or borrows the difference each year.</span></span></a></li><li><a href="1.html#s1-2"><span class="n num">1.2</span><span><span class="dn">National debt trajectory (debt held by public, % of GDP)</span><span class="dd">Stock of federal debt owed to investors relative to the economy — the state's accumulated borrowing and its exposure to interest rates.</span></span></a></li><li><a href="1.html#s1-3"><span class="n num">1.3</span><span><span class="dn">Tax policy (rates, code structure, major tax laws)</span><span class="dd">Statutory rates, the tax base and the major tax laws — how the state raises revenue and on whom the burden falls.</span></span></a></li><li><a href="1.html#s1-4"><span class="n num">1.4</span><span><span class="dn">Budget process discipline (regular order, appropriations on time, CRs/omnibuses)</span><span class="dd">Whether the 12 appropriations bills are enacted by Oct 1 under binding budget rules, or by continuing resolutions, omnibuses and lapses.</span></span></a></li><li><a href="1.html#s1-5"><span class="n num">1.5</span><span><span class="dn">Entitlement solvency (Social Security &amp; Medicare trust-fund dates and reforms)</span><span class="dd">Projected depletion dates of the Social Security (OASI/OASDI) and Medicare HI trust funds and the laws that moved them — the state's ability to honor promised benefits.</span></span></a></li><li><a href="1.html#s1-6"><span class="n num">1.6</span><span><span class="dn">Debt-ceiling management</span><span class="dd">How the statutory borrowing limit was raised or suspended and whether brinkmanship imposed costs — a sovereign's reliability as a borrower.</span></span></a></li><li><a href="1.html#s1-7"><span class="n num">1.7</span><span><span class="dn">Government shutdowns and continuity of operations</span><span class="dd">Funding lapses that halted operations, their length and measured cost — whether the state can keep itself running through political disputes.</span></span></a></li><li><a href="1.html#s1-8"><span class="n num">1.8</span><span><span class="dn">Federal workforce size and management</span><span class="dd">Headcount of the executive-branch civilian workforce (excluding the Postal Service) and the management regime governing it — the state's administrative capacity.</span></span></a></li><li><a href="1.html#s1-9"><span class="n num">1.9</span><span><span class="dn">Net interest cost on the debt</span><span class="dd">Federal net interest outlays in dollars and as a share of GDP — the slice of revenue consumed by past borrowing before any current need is met.</span></span></a></li><li><a href="1.html#s1-10"><span class="n num">1.10</span><span><span class="dn">Emergency and stimulus spending and its accountability (TARP, ARRA, CARES, ARP, etc.)</span><span class="dd">Size, design and oversight of emergency fiscal interventions — whether the state can act fast in a crisis and account for the money afterward.</span></span></a></li></ol>
+</section>
+<section class="bkt" id="b2">
+  <div class="sec-head"><div class="eyebrow">Bucket 2 of 10</div><h2><a href="2.html">Economy, Jobs &amp; Monetary</a></h2></div>
+  <ol class="idx"><li><a href="2.html#s2-1"><span class="n num">2.1</span><span><span class="dn">Real GDP growth</span><span class="dd">Inflation-adjusted output growth; the base for jobs, tax revenue and strategic capacity.</span></span></a></li><li><a href="2.html#s2-2"><span class="n num">2.2</span><span><span class="dn">Unemployment and labor-force participation</span><span class="dd">Share of the labor force without work and share of adults in it; the clearest test of whether growth reaches people.</span></span></a></li><li><a href="2.html#s2-3"><span class="n num">2.3</span><span><span class="dn">Inflation and price stability</span><span class="dd">Change in the consumer price level; it decides whether nominal gains are real and whether the dollar keeps trust.</span></span></a></li><li><a href="2.html#s2-4"><span class="n num">2.4</span><span><span class="dn">Real wages and real median household income</span><span class="dd">Inflation-adjusted pay and household income at the median; whether the typical family is getting ahead.</span></span></a></li><li><a href="2.html#s2-5"><span class="n num">2.5</span><span><span class="dn">Poverty rate (official and supplemental)</span><span class="dd">Share below the official threshold and under the SPM, which counts taxes and benefits; the floor a state keeps under its citizens.</span></span></a></li><li><a href="2.html#s2-6"><span class="n num">2.6</span><span><span class="dn">Income and wealth inequality</span><span class="dd">Dispersion of income (Gini) and concentration of wealth; it shapes social cohesion and who bears the cost of shocks.</span></span></a></li><li><a href="2.html#s2-7"><span class="n num">2.7</span><span><span class="dn">Federal Reserve independence and appointments</span><span class="dd">Who runs the central bank and whether the White House lets it set rates; the anchor of dollar credibility.</span></span></a></li><li><a href="2.html#s2-8"><span class="n num">2.8</span><span><span class="dn">Financial regulation and banking stability</span><span class="dd">Rules on banks and markets and whether they prevent failures; the difference between a recession and a systemic crisis.</span></span></a></li><li><a href="2.html#s2-9"><span class="n num">2.9</span><span><span class="dn">Housing affordability and homeownership</span><span class="dd">Home prices and mortgage rates relative to incomes, and the share of households that own; the main store of middle-class wealth.</span></span></a></li><li><a href="2.html#s2-10"><span class="n num">2.10</span><span><span class="dn">Small-business climate and new-business formation</span><span class="dd">Conditions for starting and running small firms and the rate of new-business applications; the economy's renewal mechanism.</span></span></a></li></ol>
+</section>
+<section class="bkt" id="b3">
+  <div class="sec-head"><div class="eyebrow">Bucket 3 of 10</div><h2><a href="3.html">National Security &amp; Defense</a></h2></div>
+  <ol class="idx"><li><a href="3.html#s3-1"><span class="n num">3.1</span><span><span class="dn">Defense budget and force readiness</span><span class="dd">Measures how much the state spends on its military and whether that force is trained, equipped and ready to fight when called.</span></span></a></li><li><a href="3.html#s3-2"><span class="n num">3.2</span><span><span class="dn">Major wars and interventions</span><span class="dd">Measures when, how and with what authority the state commits force abroad, and what those wars cost in lives, money and outcomes.</span></span></a></li><li><a href="3.html#s3-3"><span class="n num">3.3</span><span><span class="dn">Counterterrorism</span><span class="dd">Measures the state's ability to prevent attacks on its people and dismantle terrorist networks while staying within law it can defend.</span></span></a></li><li><a href="3.html#s3-4"><span class="n num">3.4</span><span><span class="dn">Nuclear posture and arms control</span><span class="dd">Measures how the state limits, modernizes and deters with the weapons that can end it, and whether treaties constrain its rivals.</span></span></a></li><li><a href="3.html#s3-5"><span class="n num">3.5</span><span><span class="dn">Veterans' care and the VA</span><span class="dd">Measures whether the state delivers timely health care and earned benefits to those it sent to war, and how it handles the bill.</span></span></a></li><li><a href="3.html#s3-6"><span class="n num">3.6</span><span><span class="dn">Intelligence community oversight and reform</span><span class="dd">Measures whether the state's spies serve policy without politicization, and whether Congress and courts can check them.</span></span></a></li><li><a href="3.html#s3-7"><span class="n num">3.7</span><span><span class="dn">Cybersecurity and critical-infrastructure defense</span><span class="dd">Measures whether the state can protect its networks, utilities and secrets from foreign intrusion and respond when they fail.</span></span></a></li><li><a href="3.html#s3-8"><span class="n num">3.8</span><span><span class="dn">Space policy (NASA, Space Force, commercial space)</span><span class="dd">Measures whether the state keeps access to and advantage in orbit — civil exploration, military space, and a commercial launch base.</span></span></a></li><li><a href="3.html#s3-9"><span class="n num">3.9</span><span><span class="dn">Military recruitment, retention and personnel policy</span><span class="dd">Measures whether the state can fill and keep an all-volunteer force, and how personnel rules shape who serves and who leads.</span></span></a></li><li><a href="3.html#s3-10"><span class="n num">3.10</span><span><span class="dn">Defense industrial base and procurement reform</span><span class="dd">Measures whether the state can buy weapons on time and budget and surge production in war, and whether reform laws change outcomes.</span></span></a></li></ol>
+</section>
+<section class="bkt" id="b4">
+  <div class="sec-head"><div class="eyebrow">Bucket 4 of 10</div><h2><a href="4.html">Foreign Policy &amp; Alliances</a></h2></div>
+  <ol class="idx"><li><a href="4.html#s4-1"><span class="n num">4.1</span><span><span class="dn">NATO and European alliances (incl. Ukraine)</span><span class="dd">Measures alliance cohesion, burden-sharing, enlargement and support for Ukraine — the main instrument of U.S. power in Europe.</span></span></a></li><li><a href="4.html#s4-2"><span class="n num">4.2</span><span><span class="dn">China strategy</span><span class="dd">Measures how each administration balanced trade, deterrence and engagement with the principal peer competitor.</span></span></a></li><li><a href="4.html#s4-3"><span class="n num">4.3</span><span><span class="dn">Russia relations</span><span class="dd">Measures management of the one adversary with a comparable nuclear arsenal — arms control, sanctions, deterrence and diplomacy.</span></span></a></li><li><a href="4.html#s4-4"><span class="n num">4.4</span><span><span class="dn">Middle East, Israel and the Palestinians</span><span class="dd">Measures the U.S. role in Arab–Israeli peace and regional security — commitments, aid and conflict outcomes.</span></span></a></li><li><a href="4.html#s4-5"><span class="n num">4.5</span><span><span class="dn">Iran</span><span class="dd">Measures efforts to prevent an Iranian bomb and counter its proxies — sanctions, diplomacy and force.</span></span></a></li><li><a href="4.html#s4-6"><span class="n num">4.6</span><span><span class="dn">North Korea</span><span class="dd">Measures efforts to halt a hostile nuclear program — the one case where every approach has been tried.</span></span></a></li><li><a href="4.html#s4-7"><span class="n num">4.7</span><span><span class="dn">Western Hemisphere (Mexico, Cuba, Venezuela, Central America)</span><span class="dd">Measures management of the near abroad — trade, drugs, migration and the Cuban and Venezuelan regimes.</span></span></a></li><li><a href="4.html#s4-8"><span class="n num">4.8</span><span><span class="dn">Foreign aid and soft power (USAID, PEPFAR, Millennium Challenge)</span><span class="dd">Measures aid volume, effectiveness and the institutions that carry U.S. influence abroad.</span></span></a></li><li><a href="4.html#s4-9"><span class="n num">4.9</span><span><span class="dn">International institutions and treaties (UN, WTO, Paris, WHO, ICC)</span><span class="dd">Measures whether the U.S. binds itself to the rules it helped write — treaties ratified, bodies joined or left.</span></span></a></li><li><a href="4.html#s4-10"><span class="n num">4.10</span><span><span class="dn">Indo-Pacific allies and partners (Japan, Korea, Taiwan, Australia, India, Philippines)</span><span class="dd">Measures alliance strength with the treaty allies and partners that anchor U.S. position against China.</span></span></a></li></ol>
+</section>
+<section class="bkt" id="b5">
+  <div class="sec-head"><div class="eyebrow">Bucket 5 of 10</div><h2><a href="5.html">Borders, Immigration &amp; Citizenship</a></h2></div>
+  <ol class="idx"><li><a href="5.html#s5-1"><span class="n num">5.1</span><span><span class="dn">Border security and enforcement (apprehensions, barriers, agents)</span><span class="dd">Measures whether the state controls who enters between ports of entry: Border Patrol apprehensions, barrier miles and agent strength — the most basic test of territorial sovereignty.</span></span></a></li><li><a href="5.html#s5-2"><span class="n num">5.2</span><span><span class="dn">Legal immigration levels and visa policy</span><span class="dd">Measures how many people the state admits permanently and on what terms — the sovereign choice of who joins the polity, set by the 1990 Act's ~675,000 flexible cap.</span></span></a></li><li><a href="5.html#s5-3"><span class="n num">5.3</span><span><span class="dn">Interior enforcement and removals/deportations</span><span class="dd">Measures whether immigration law is enforced inside the country — formal removals, returns, detention — the follow-through that gives border rules meaning.</span></span></a></li><li><a href="5.html#s5-4"><span class="n num">5.4</span><span><span class="dn">Asylum and refugee policy</span><span class="dd">Measures how the state honors (or limits) its treaty and statutory duty to protect the persecuted without letting the asylum channel substitute for immigration control.</span></span></a></li><li><a href="5.html#s5-5"><span class="n num">5.5</span><span><span class="dn">Unauthorized population and legalization efforts (1996 law, 2006/2013 bills, DACA/DAPA)</span><span class="dd">Measures the size of the population living outside the law and whether the political system resolved its status — the unfinished business of every presidency since 1986.</span></span></a></li><li><a href="5.html#s5-6"><span class="n num">5.6</span><span><span class="dn">Skilled and employment-based immigration (H-1B, green-card backlog)</span><span class="dd">Measures whether the state's rules for high-skill workers serve its labor market and innovation base — a 65,000 H-1B cap and 140,000 employment green cards, both set in 1990.</span></span></a></li><li><a href="5.html#s5-7"><span class="n num">5.7</span><span><span class="dn">Immigration courts and case backlog</span><span class="dd">Measures whether the adjudication system can decide who stays within a useful time — a backlog converts every border policy into de facto admission or de facto denial.</span></span></a></li><li><a href="5.html#s5-8"><span class="n num">5.8</span><span><span class="dn">Naturalization, citizenship and birthright-citizenship policy</span><span class="dd">Measures how the state admits people to full membership — naturalization volume and integrity, and the constitutional rule for citizenship at birth.</span></span></a></li><li><a href="5.html#s5-9"><span class="n num">5.9</span><span><span class="dn">Cooperation with Mexico and Canada on migration and border trade</span><span class="dd">Measures whether the state can enlist its two land neighbors — its largest trading partners — to manage migration and crime without wrecking the commerce that crosses the same line.</span></span></a></li><li><a href="5.html#s5-10"><span class="n num">5.10</span><span><span class="dn">Smuggling, trafficking and fentanyl interdiction at the border</span><span class="dd">Measures whether the state can stop the criminal flows — people-smuggling, trafficking and synthetic drugs — that exploit the same border, the lethal end of immigration policy.</span></span></a></li></ol>
+</section>
+<section class="bkt" id="b6">
+  <div class="sec-head"><div class="eyebrow">Bucket 6 of 10</div><h2><a href="6.html">Trade, Industry &amp; Technology</a></h2></div>
+  <ol class="idx"><li><a href="6.html#s6-1"><span class="n num">6.1</span><span><span class="dn">Trade agreements (NAFTA/USMCA, WTO accession, KORUS, TPP, Phase One)</span><span class="dd">Measures the binding trade pacts each administration negotiated or ratified; they set the rules under which a state's exporters, importers and workers compete.</span></span></a></li><li><a href="6.html#s6-2"><span class="n num">6.2</span><span><span class="dn">Tariffs and trade enforcement (Section 232/301, IEEPA tariffs)</span><span class="dd">Measures use of tariffs and trade-remedy law; tariffs are a state's most direct lever on imports, prices and foreign leverage.</span></span></a></li><li><a href="6.html#s6-3"><span class="n num">6.3</span><span><span class="dn">Goods and services trade deficit</span><span class="dd">Measures the gap between what the country sells and buys abroad (Census/BEA FT-900), a marker of competitiveness and dependence on foreign capital.</span></span></a></li><li><a href="6.html#s6-4"><span class="n num">6.4</span><span><span class="dn">Manufacturing employment and reshoring</span><span class="dd">Measures factory jobs (BLS CES) and new plant investment; manufacturing capacity underpins defense, supply-chain security and middle-income work.</span></span></a></li><li><a href="6.html#s6-5"><span class="n num">6.5</span><span><span class="dn">Industrial policy (CHIPS, IRA, Buy American, strategic sectors)</span><span class="dd">Measures direct state support for chosen industries, which decides whether critical goods (chips, batteries, steel, vaccines) can be made at home.</span></span></a></li><li><a href="6.html#s6-6"><span class="n num">6.6</span><span><span class="dn">Federal R&amp;D and technology leadership</span><span class="dd">Measures federal science funding and its outcomes; sustained public research underwrites the technologies on which military and economic primacy rest.</span></span></a></li><li><a href="6.html#s6-7"><span class="n num">6.7</span><span><span class="dn">Antitrust and Big Tech</span><span class="dd">Measures enforcement against monopoly and merger power, especially in technology; it determines whether markets, not incumbents, allocate the economy's gains.</span></span></a></li><li><a href="6.html#s6-8"><span class="n num">6.8</span><span><span class="dn">Artificial-intelligence policy</span><span class="dd">Measures how each administration governed and promoted AI; it is now the contested frontier of economic and military advantage.</span></span></a></li><li><a href="6.html#s6-9"><span class="n num">6.9</span><span><span class="dn">Export controls and intellectual-property protection</span><span class="dd">Measures controls on sensitive technology exports and defense of patents and copyrights; both guard the technological edge a state depends on.</span></span></a></li><li><a href="6.html#s6-10"><span class="n num">6.10</span><span><span class="dn">Agriculture and farm policy (farm bills, subsidies, trade retaliation payments)</span><span class="dd">Measures farm-income support and the fallout of trade fights on growers; food production and rural economies are a strategic base for any state.</span></span></a></li></ol>
+</section>
+<section class="bkt" id="b7">
+  <div class="sec-head"><div class="eyebrow">Bucket 7 of 10</div><h2><a href="7.html">Energy, Infrastructure &amp; Environment</a></h2></div>
+  <ol class="idx"><li><a href="7.html#s7-1"><span class="n num">7.1</span><span><span class="dn">Domestic oil and gas production and energy independence</span><span class="dd">Measures crude and gas output and the net energy trade position; determines price exposure, sanctions leverage and vulnerability to foreign supply shocks.</span></span></a></li><li><a href="7.html#s7-2"><span class="n num">7.2</span><span><span class="dn">Electricity grid reliability and capacity</span><span class="dd">Measures whether generation and transmission keep pace with demand without blackouts; a failing grid is a national-security and economic-competitiveness liability.</span></span></a></li><li><a href="7.html#s7-3"><span class="n num">7.3</span><span><span class="dn">Nuclear energy</span><span class="dd">Measures reactor fleet size, new builds and regulatory capacity; nuclear supplies about a fifth of U.S. power and underpins fuel-cycle and naval security.</span></span></a></li><li><a href="7.html#s7-4"><span class="n num">7.4</span><span><span class="dn">Renewables and clean-energy deployment</span><span class="dd">Measures wind, solar and storage capacity added and their generation share; shapes the resource mix, supply chains and ratepayer costs.</span></span></a></li><li><a href="7.html#s7-5"><span class="n num">7.5</span><span><span class="dn">Climate policy and greenhouse-gas emissions</span><span class="dd">Measures federal climate commitments and measured emissions; tests whether a state can honor treaties and manage long-run physical and trade risk.</span></span></a></li><li><a href="7.html#s7-6"><span class="n num">7.6</span><span><span class="dn">Surface infrastructure (highways, bridges, transit, rail)</span><span class="dd">Measures the condition and funding of roads, bridges, transit and rail; logistics capacity and mobility underpin commerce and defense.</span></span></a></li><li><a href="7.html#s7-7"><span class="n num">7.7</span><span><span class="dn">Broadband and digital infrastructure</span><span class="dd">Measures home-broadband reach and federal deployment programs; connectivity is now prerequisite for commerce, schooling, telehealth and emergency communication.</span></span></a></li><li><a href="7.html#s7-8"><span class="n num">7.8</span><span><span class="dn">Water infrastructure and drinking-water safety</span><span class="dd">Measures safe-drinking-water rules, lead and PFAS controls and pipe funding; water failures are immediate public-health and legitimacy crises.</span></span></a></li><li><a href="7.html#s7-9"><span class="n num">7.9</span><span><span class="dn">Public lands, conservation and permitting reform (NEPA)</span><span class="dd">Measures protected acreage, monument decisions and the speed of federal environmental review; both resource access and conservation depend on it.</span></span></a></li><li><a href="7.html#s7-10"><span class="n num">7.10</span><span><span class="dn">Disaster response and resilience (FEMA, major hurricanes, wildfires)</span><span class="dd">Measures federal readiness and response to catastrophes; it is the most visible test of state capacity citizens experience directly.</span></span></a></li></ol>
+</section>
+<section class="bkt" id="b8">
+  <div class="sec-head"><div class="eyebrow">Bucket 8 of 10</div><h2><a href="8.html">Rule of Law, Institutions &amp; Civil Liberties</a></h2></div>
+  <ol class="idx"><li><a href="8.html#s8-1"><span class="n num">8.1</span><span><span class="dn">Judicial appointments and the federal courts</span><span class="dd">Who staffs the Article III bench and how the Senate confirms them; the courts decide the legality of everything else in this scorecard.</span></span></a></li><li><a href="8.html#s8-2"><span class="n num">8.2</span><span><span class="dn">Executive power and emergency authorities</span><span class="dd">How far presidents act without Congress through orders, emergencies, war powers and statutory stretch; the core question of who governs between elections.</span></span></a></li><li><a href="8.html#s8-3"><span class="n num">8.3</span><span><span class="dn">Separation of powers and congressional oversight</span><span class="dd">Whether Congress can obtain information, control spending and remove or protect officers; the practical test of checks and balances.</span></span></a></li><li><a href="8.html#s8-4"><span class="n num">8.4</span><span><span class="dn">Surveillance and privacy (FISA, Patriot Act, Section 702)</span><span class="dd">The legal limits on government collection of Americans' communications; the balance between counterterrorism and the Fourth Amendment.</span></span></a></li><li><a href="8.html#s8-5"><span class="n num">8.5</span><span><span class="dn">Free speech and press freedom</span><span class="dd">Government pressure on speakers, publishers and dissenters, measured by prosecutions, access disputes and external indices; a free press is how citizens check the state.</span></span></a></li><li><a href="8.html#s8-6"><span class="n num">8.6</span><span><span class="dn">Second Amendment and firearms policy</span><span class="dd">Federal gun laws, their enforcement and the constitutional boundary set by the courts; a core liberty for some citizens and a safety question for all.</span></span></a></li><li><a href="8.html#s8-7"><span class="n num">8.7</span><span><span class="dn">Criminal justice and incarceration</span><span class="dd">Federal sentencing, prison population, clemency and the death penalty; how a state uses its power to punish.</span></span></a></li><li><a href="8.html#s8-8"><span class="n num">8.8</span><span><span class="dn">Civil-rights enforcement</span><span class="dd">How DOJ and agencies enforce anti-discrimination law in voting, policing, employment and education; the state's promise of equal protection.</span></span></a></li><li><a href="8.html#s8-9"><span class="n num">8.9</span><span><span class="dn">Government ethics, transparency and corruption</span><span class="dd">Conflicts of interest, self-dealing, pardons for allies, and the watchdogs that police them; whether office is used for public or private ends.</span></span></a></li><li><a href="8.html#s8-10"><span class="n num">8.10</span><span><span class="dn">Independence of DOJ/FBI and politicization of law enforcement</span><span class="dd">Whether prosecutions and investigations follow evidence or presidential preference; the line between law enforcement and political power.</span></span></a></li></ol>
+</section>
+<section class="bkt" id="b9">
+  <div class="sec-head"><div class="eyebrow">Bucket 9 of 10</div><h2><a href="9.html">Public Health, Safety &amp; Social Insurance</a></h2></div>
+  <ol class="idx"><li><a href="9.html#s9-1"><span class="n num">9.1</span><span><span class="dn">Health-insurance coverage and costs (HIPAA, Medicare Part D, ACA, repeal efforts)</span><span class="dd">Share of residents without coverage and what coverage costs; a state's ability to keep its workforce healthy and solvent against medical shocks.</span></span></a></li><li><a href="9.html#s9-2"><span class="n num">9.2</span><span><span class="dn">Medicare and Medicaid policy</span><span class="dd">Design, financing and enrollment of the two programs that cover roughly 150 million people and a third of federal spending.</span></span></a></li><li><a href="9.html#s9-3"><span class="n num">9.3</span><span><span class="dn">Prescription-drug prices</span><span class="dd">What Americans and federal programs pay for medicines; a lever on household budgets, Medicare solvency and the pharmaceutical industrial base.</span></span></a></li><li><a href="9.html#s9-4"><span class="n num">9.4</span><span><span class="dn">Pandemic preparedness and response (H1N1, Ebola, COVID-19)</span><span class="dd">Stockpiles, surveillance, vaccines and the speed and credibility of federal response when a pathogen arrives.</span></span></a></li><li><a href="9.html#s9-5"><span class="n num">9.5</span><span><span class="dn">Opioid and fentanyl overdose crisis</span><span class="dd">Annual overdose deaths and the federal response to prescription opioids, heroin and illicit fentanyl.</span></span></a></li><li><a href="9.html#s9-6"><span class="n num">9.6</span><span><span class="dn">Life expectancy and mortality trends</span><span class="dd">Life expectancy at birth and the age-adjusted death rate — the summary scorecard of a nation's health system, behaviors and shocks.</span></span></a></li><li><a href="9.html#s9-7"><span class="n num">9.7</span><span><span class="dn">Violent crime and federal policing policy</span><span class="dd">The rate of murder and violent crime and the federal role in funding, policing and public order.</span></span></a></li><li><a href="9.html#s9-8"><span class="n num">9.8</span><span><span class="dn">K-12 education policy (NCLB, Race to the Top, ESSA, Dept. of Education)</span><span class="dd">Federal leverage over 50 million public-school students and what national assessments show they learned.</span></span></a></li><li><a href="9.html#s9-9"><span class="n num">9.9</span><span><span class="dn">Higher education and student debt</span><span class="dd">Federal aid, loan programs and the $1.7 trillion student-debt portfolio the Treasury owns.</span></span></a></li><li><a href="9.html#s9-10"><span class="n num">9.10</span><span><span class="dn">Social Security and retirement security</span><span class="dd">Solvency of the retirement and disability trust funds and the adequacy and administration of benefits for 70 million people.</span></span></a></li></ol>
+</section>
+<section class="bkt" id="b10">
+  <div class="sec-head"><div class="eyebrow">Bucket 10 of 10</div><h2><a href="10.html">Elections, Civic Trust &amp; Federalism</a></h2></div>
+  <ol class="idx"><li><a href="10.html#s10-1"><span class="n num">10.1</span><span><span class="dn">Election administration and election security</span><span class="dd">Whether the federal government funds, defends and stays neutral toward the state-run machinery that produces results citizens accept.</span></span></a></li><li><a href="10.html#s10-2"><span class="n num">10.2</span><span><span class="dn">Voting rights and ballot access</span><span class="dd">How far federal law protects the franchise against state ballot rules, and how the courts have reset that balance since 1993.</span></span></a></li><li><a href="10.html#s10-3"><span class="n num">10.3</span><span><span class="dn">Campaign finance</span><span class="dd">Rules on money in federal elections, the FEC's capacity to enforce them, and total spending — proxies for whether officeholders answer to voters or donors.</span></span></a></li><li><a href="10.html#s10-4"><span class="n num">10.4</span><span><span class="dn">Peaceful transfer of power and acceptance of results</span><span class="dd">Whether losers concede, winners are seated on schedule, and officeholders accept certified results — the minimum condition for a sovereign republic.</span></span></a></li><li><a href="10.html#s10-5"><span class="n num">10.5</span><span><span class="dn">Public trust in government and institutions</span><span class="dd">The Pew/NES trust-in-government series and Gallup's confidence-in-institutions average — the legitimacy reserve a state draws on in a crisis.</span></span></a></li><li><a href="10.html#s10-6"><span class="n num">10.6</span><span><span class="dn">Bipartisanship record and polarization</span><span class="dd">Whether landmark laws passed with cross-party majorities, and how far party medians in Congress and the public have diverged.</span></span></a></li><li><a href="10.html#s10-7"><span class="n num">10.7</span><span><span class="dn">Federalism and state–federal relations</span><span class="dd">Where power sits between Washington and the states — mandates, preemption, conditional funding, and the use of federal force inside states.</span></span></a></li><li><a href="10.html#s10-8"><span class="n num">10.8</span><span><span class="dn">Census and apportionment</span><span class="dd">Whether the decennial count is accurate, on time and insulated from politics — it allocates House seats, electoral votes and trillions in federal funds.</span></span></a></li><li><a href="10.html#s10-9"><span class="n num">10.9</span><span><span class="dn">Civil service and the merit system</span><span class="dd">Whether the roughly two-million-person career workforce is hired and fired on merit, and who controls it — Congress, the president or neither.</span></span></a></li><li><a href="10.html#s10-10"><span class="n num">10.10</span><span><span class="dn">Media environment, misinformation and government–platform relations</span><span class="dd">How each administration treated the press, public broadcasting and platforms — pressure, subsidy, prosecution or "jawboning" — and what courts allowed.</span></span></a></li></ol>
+</section>
+<footer>
+  <div class="steps"><a class="step" href="../about.html"><span class="eyebrow">← Overview</span><span>How to read this</span></a><a class="step" href="1.html"><span class="eyebrow">Bucket 1 →</span><span>Fiscal &amp; Budget</span></a></div>
+  <p class="fine">Six Administrations Scorecard · As of <span class="num">Nov 11, 2026</span> · This index searches domain names and descriptions only. Each bucket page has its own search over the full text of its cells. <a href="../sources.html">Sources</a> · <a href="../index.html">Chart page</a></p>
+</footer>
+</div>
+<script>
+(function(){
+  var form = document.querySelector('form.filter'); if (!form) return;
+  form.hidden = false;
+  var box = form.querySelector('input'), showing = document.getElementById('showing');
+  var secs = document.querySelectorAll('section.bkt'), items = document.querySelectorAll('ol.idx li'), text = [];
+  for (var i = 0; i < items.length; i++) text.push(items[i].textContent.toLowerCase());
+  function apply(){
+    var term = box.value.toLowerCase().replace(/\s+/g, ' ').trim(), shown = 0;
+    for (var i = 0; i < items.length; i++) { var on = !term || text[i].indexOf(term) > -1; items[i].hidden = !on; if (on) shown++; }
+    for (var j = 0; j < secs.length; j++) secs[j].hidden = !secs[j].querySelector('ol.idx li:not([hidden])');
+    showing.textContent = !term ? 'Showing all ' + items.length + ' domains.'
+      : shown ? 'Showing ' + shown + ' of ' + items.length + ' domains whose name or description mentions \u201c' + term + '\u201d.'
+      : 'No domain name or description mentions \u201c' + term + '\u201d. The bucket pages search the full text of every cell.';
+  }
+  box.addEventListener('input', apply);
+  apply();
+})();
+</script>
+</body>
+</html>
