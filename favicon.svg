@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <!-- Six Administrations Scorecard: six term bands in the two party colours, one series drawn across them,
+       and the two Congress strips beneath. Content stays inside the central 80% so the icon also works masked. -->
+  <rect width="512" height="512" rx="104" fill="#15140f"/>
+  <g opacity="0.78">
+    <rect x="64" y="96" width="64" height="288" fill="#2a78d6"/>
+    <rect x="128" y="96" width="64" height="288" fill="#e34948"/>
+    <rect x="192" y="96" width="64" height="288" fill="#2a78d6"/>
+    <rect x="256" y="96" width="64" height="288" fill="#e34948"/>
+    <rect x="320" y="96" width="64" height="288" fill="#2a78d6"/>
+    <rect x="384" y="96" width="64" height="288" fill="#e34948"/>
+  </g>
+  <polyline points="64,318 128,236 192,292 256,176 320,262 384,150 448,196" fill="none" stroke="#f1efe8" stroke-width="30" stroke-linecap="round" stroke-linejoin="round"/>
+  <g>
+    <rect x="64" y="400" width="48" height="14" fill="#2a78d6"/><rect x="112" y="400" width="48" height="14" fill="#2a78d6"/><rect x="160" y="400" width="48" height="14" fill="#e34948"/><rect x="208" y="400" width="48" height="14" fill="#e34948"/><rect x="256" y="400" width="48" height="14" fill="#2a78d6"/><rect x="304" y="400" width="48" height="14" fill="#2a78d6"/><rect x="352" y="400" width="48" height="14" fill="#e34948"/><rect x="400" y="400" width="48" height="14" fill="#e34948"/>
+    <rect x="64" y="420" width="48" height="14" fill="#2a78d6"/><rect x="112" y="420" width="48" height="14" fill="#e34948"/><rect x="160" y="420" width="48" height="14" fill="#e34948"/><rect x="208" y="420" width="48" height="14" fill="#2a78d6"/><rect x="256" y="420" width="48" height="14" fill="#2a78d6"/><rect x="304" y="420" width="48" height="14" fill="#e34948"/><rect x="352" y="420" width="48" height="14" fill="#e34948"/><rect x="400" y="420" width="48" height="14" fill="#2a78d6"/>
+  </g>
+</svg>

@@ -1,0 +1,24 @@
+{
+ "name": "Six Administrations Scorecard",
+ "short_name": "Scorecard",
+ "description": "What happened under each U.S. president from Clinton to Trump's second term, with the case each side makes and the sources.",
+ "start_url": "./index.html",
+ "scope": "./",
+ "display": "standalone",
+ "background_color": "#faf9f6",
+ "theme_color": "#15140f",
+ "icons": [
+  {
+   "src": "icon-192.png",
+   "sizes": "192x192",
+   "type": "image/png",
+   "purpose": "any maskable"
+  },
+  {
+   "src": "icon-512.png",
+   "sizes": "512x512",
+   "type": "image/png",
+   "purpose": "any maskable"
+  }
+ ]
+}
